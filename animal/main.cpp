@@ -38,6 +38,14 @@ public:
 		}
 		cout << "Destruct Pet\n";
 	}
+
+	virtual void Sound() const = 0;  
+	virtual void Show() const       
+	{
+		cout << "Name: " << name << endl;
+	}
+	virtual void Type() const = 0; 
+
 };
 
 class Dog : public Pet 
@@ -82,6 +90,23 @@ public:
 		strcpy_s(Color, strlen(c) + 1, c);
 		Weight = w;
 		Pet::Input();
+	}
+	void Sound() const  
+	{
+		cout << "Dog sounds: woof, woof, woof!" << endl;
+	}
+
+	void Type() const  
+	{
+		cout << "Type: Dog" << endl;
+	}
+
+	void Show() const   
+	{
+		Pet::Show();
+		cout << "Dog breed: " << Breed << endl;
+		cout << "Dog color: " << Color << endl;
+		cout << "Dog weight: " << Weight << " kilograms\n";
 	}
 };
 
@@ -132,6 +157,23 @@ public:
 		strcpy_s(Wool_length, strlen(w) + 1, w);
 		Pet::Input();
 	}
+	void Sound() const  
+	{
+		cout << "Cat says: meow, meow, meow!" << endl;
+	}
+
+	void Type() const  
+	{
+		cout << "Type: Cat" << endl;
+	}
+
+	void Show() const   
+	{
+		Pet::Show();
+		cout << "Cat breed: " << Breed << endl;
+		cout << "Cat color: " << Color << endl;
+		cout << "Cat wool length: " << Wool_length << endl;
+	}
 };
 
 class Parrot : public Pet
@@ -181,18 +223,42 @@ public:
 		strcpy_s(Size_Parrot, strlen(s) + 1, s);
 		Pet::Input();
 	}
+	void Sound() const 
+	{
+		cout << "Parrot says: chirp, chirp, chirp!" << endl;
+	}
+
+	void Type() const  
+	{
+		cout << "Type: Parrot" << endl;
+	}
+
+	void Show() const   
+	{
+		Pet::Show();
+		cout << "Parrot breed: " << Breed << endl;
+		cout << "Parrot color of feathers: " << Color_of_feathers << endl;
+		cout << "Parrot size: " << Size_Parrot << endl;
+	}
 };
 
 int main()
 {
-	Dog d1("Dekster", "buldog", "brown", 25);
-	d1.Print();
+	const int size = 3;
+	Pet* pets[size] = 
+	{
+		new Dog("Dekster", "Bulldog", "Brown", 25),
+		new Cat("Murka", "Persian", "Grey", "Short"),
+		new Parrot("Karl", "Kakadu", "White", "30cm long, 10cm width")
+	};
 
-	Cat c1("Murka", "persian cat", "grey", "short");
-	c1.Print();
-
-	Parrot p1("Karl", "kakadu", "white", "length 30cm and width 10 cm");
-	d1.Print();
+	for (int i = 0; i < size; i++)
+	{
+		pets[i]->Show();
+		pets[i]->Sound();
+		pets[i]->Type();
+		cout << endl;
+	}
 
 	system("pause");
 }
